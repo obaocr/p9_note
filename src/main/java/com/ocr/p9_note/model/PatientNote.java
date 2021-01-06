@@ -1,11 +1,12 @@
 package com.ocr.p9_note.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-public class Note {
+@Document(collection = "PatientNote")
+public class PatientNote {
 
     @Id
     private Integer id;
