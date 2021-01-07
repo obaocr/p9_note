@@ -18,6 +18,8 @@ public class PatientNote {
 
     @Id
     private Long noteId;
+    @Field("_id")
+    private String id;
     private Integer patientId;
     @Size(min = 3, max = 100, message = "title size between 3 and 100")
     private String title;
@@ -27,6 +29,14 @@ public class PatientNote {
 
     public PatientNote() {
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Long getNoteId() {
@@ -80,7 +90,8 @@ public class PatientNote {
     @Override
     public String toString() {
         return "PatientNote{" +
-                "noteId='" + noteId + '\'' +
+                "noteId=" + noteId +
+                ", id='" + id + '\'' +
                 ", patientId=" + patientId +
                 ", title='" + title + '\'' +
                 ", note='" + note + '\'' +
