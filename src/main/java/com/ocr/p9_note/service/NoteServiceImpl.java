@@ -60,6 +60,14 @@ public class NoteServiceImpl implements  NoteService {
     }
 
     @Override
+    public PatientNote getNoteByNoteId(Long noteId) {
+        logger.debug("P9 getNoteByNoteId :" + noteId);
+        Query searchQuery = new Query();
+        searchQuery.addCriteria(Criteria.where("noteId").is(noteId));
+        return mongoOperations.find(searchQuery, PatientNote.class).get(0);
+    }
+
+    @Override
     public Boolean deleteNoteByNoteId(Long noteId) {
         System.out.println("****** deleteNoteByNoteId Id = " + noteId);
         logger.debug("P9 deleteNoteByNoteId :" + noteId);

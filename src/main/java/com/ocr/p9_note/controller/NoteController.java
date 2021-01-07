@@ -30,10 +30,16 @@ public class NoteController {
         return noteService.getAllNotes();
     }
 
-    @GetMapping("/Note")
+    @GetMapping("/searchNotes")
     public List<PatientNote> getNoteByPatientId(@RequestParam Integer patientId) {
         logger.debug("P9 get Note by Patient Id" + patientId);
         return noteService.getNoteByPatientId(patientId);
+    }
+
+    @GetMapping("/Note/{noteId}")
+    public PatientNote getNoteByNoteId(@PathVariable("noteId") Long noteId) {
+        logger.debug("P9 get Note by Note Id" + noteId);
+        return noteService.getNoteByNoteId(noteId);
     }
 
     @PostMapping("/Note")

@@ -10,5 +10,6 @@ public interface NoteService {
     Long addNote(PatientNote note);
     Boolean updateNote(PatientNote note);
     List<PatientNote> getNoteByPatientId(Integer Id);
+    PatientNote getNoteByNoteId(Long Id);
     Boolean deleteNoteByNoteId(Long noteId);
 }
