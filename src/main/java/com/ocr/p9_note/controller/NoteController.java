@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -36,8 +37,8 @@ public class NoteController {
     }
 
     @PostMapping("/Note")
-    public String addNote(PatientNote note) {
-        logger.debug("P9 add note");
+    public String addNote(@RequestBody @Valid PatientNote note) {
+        logger.debug("P9 add note :" + note.toString());
         return noteService.addNote(note);
     }
 

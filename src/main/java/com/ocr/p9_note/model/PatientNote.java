@@ -3,11 +3,8 @@ package com.ocr.p9_note.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -23,18 +20,27 @@ public class PatientNote {
     @Field("_id")
     private String id;
     @Field("patientId")
-    @NotBlank
     private Integer patientId;
     @Field("title")
     @Size(min = 3, max = 100, message = "title size between 3 and 100")
     private String title;
-    @NotBlank
     @Field("note")
     private String note;
     @Field("createDate")
     private LocalDateTime createDate;
     @Field("updateDate")
     private LocalDateTime updateDate;
+
+    public PatientNote() {
+
+    }
+
+    public PatientNote(String id, Integer patientId, @Size(min = 3, max = 100, message = "title size between 3 and 100") String title, String note) {
+        this.id = id;
+        this.patientId = patientId;
+        this.title = title;
+        this.note = note;
+    }
 
     public String getId() {
         return id;
