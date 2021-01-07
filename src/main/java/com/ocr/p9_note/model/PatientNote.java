@@ -17,37 +17,24 @@ public class PatientNote {
     public static final String SEQUENCE_NAME = "notes_sequence";
 
     @Id
-    @Field("_id")
-    private String id;
-    @Field("patientId")
+    private Long noteId;
     private Integer patientId;
-    @Field("title")
     @Size(min = 3, max = 100, message = "title size between 3 and 100")
     private String title;
-    @Field("note")
     private String note;
-    @Field("createDate")
     private LocalDateTime createDate;
-    @Field("updateDate")
     private LocalDateTime updateDate;
 
     public PatientNote() {
 
     }
 
-    public PatientNote(String id, Integer patientId, @Size(min = 3, max = 100, message = "title size between 3 and 100") String title, String note) {
-        this.id = id;
-        this.patientId = patientId;
-        this.title = title;
-        this.note = note;
+    public Long getNoteId() {
+        return noteId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setNoteId(Long noteId) {
+        this.noteId = noteId;
     }
 
     public Integer getPatientId() {
@@ -93,7 +80,7 @@ public class PatientNote {
     @Override
     public String toString() {
         return "PatientNote{" +
-                "id='" + id + '\'' +
+                "noteId='" + noteId + '\'' +
                 ", patientId=" + patientId +
                 ", title='" + title + '\'' +
                 ", note='" + note + '\'' +

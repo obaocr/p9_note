@@ -32,14 +32,21 @@ public class NoteController {
 
     @GetMapping("/Note")
     public List<PatientNote> getNoteByPatientId(@RequestParam Integer patientId) {
-        logger.debug("P9 get Note by Note Id" + patientId);
+        logger.debug("P9 get Note by Patient Id" + patientId);
         return noteService.getNoteByPatientId(patientId);
     }
 
     @PostMapping("/Note")
-    public String addNote(@RequestBody @Valid PatientNote note) {
+    public Long addNote(@RequestBody @Valid PatientNote note) {
         logger.debug("P9 add note :" + note.toString());
         return noteService.addNote(note);
+    }
+
+    @DeleteMapping("/Note/{Id}")
+    public Boolean deleteNoteByNoteId(@PathVariable("Id") Long Id) {
+        logger.debug("P9 delete Note by Note Id" + Id);
+        noteService.deleteNoteByNoteId(Id);
+        return true;
     }
 
 }

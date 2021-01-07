@@ -8,7 +8,7 @@ cf. https://docs.mongodb.com/manual/reference/method/db.createCollection/
 2. Create a collection : database_sequences (db.createCollection("database_sequences"))
 
 
-db.patientNote.drop()
+db.note.drop()
 db.note.countDocuments({})
 
 db.note.insert( { "patientId": "1", "title": "Practitioner's notes/recommendations", "note": "Patient states that they are 'feeling terrific" } )
