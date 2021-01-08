@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+// TODO alimenter les dates creation / maj
 
 @Service
 public class NoteServiceImpl implements  NoteService {
@@ -42,11 +45,18 @@ public class NoteServiceImpl implements  NoteService {
         return noteRepository.save(note).getNoteId();
     }
 
+    // TODO fait un insert avec la même valeur !!!!
     @Override
     public Boolean updateNote(PatientNote note) {
         logger.debug("P9 updateNote :" + note.toString());
-        noteRepository.save(note);
-        return true;
+        PatientNote patientNote =  noteRepository.findPatientNoteByNoteId(note.getNoteId()).get(0);
+        if(patientNote != null) {
+            patientNote.setTitle(note.getTitle());
+            patientNote.setNote(note.getNote());
+            noteRepository.save(patientNote);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -60,11 +70,9 @@ public class NoteServiceImpl implements  NoteService {
     }
 
     @Override
-    public PatientNote getNoteByNoteId(Long noteId) {
+    public List<PatientNote> getNoteByNoteId(Long noteId) {
         logger.debug("P9 getNoteByNoteId :" + noteId);
-        Query searchQuery = new Query();
-        searchQuery.addCriteria(Criteria.where("noteId").is(noteId));
-        return mongoOperations.find(searchQuery, PatientNote.class).get(0);
+        return noteRepository.findPatientNoteByNoteId(noteId);
     }
 
     @Override
