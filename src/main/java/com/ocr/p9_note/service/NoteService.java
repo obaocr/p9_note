@@ -7,9 +7,9 @@ import java.util.List;
 public interface NoteService {
 
     List<PatientNote> getAllNotes();
-    Long addNote(PatientNote note);
+    String addNote(PatientNote note);
     Boolean updateNote(PatientNote note);
     List<PatientNote> getNoteByPatientId(Integer Id);
-    List<PatientNote> getNoteByNoteId(Long Id);
+    List<PatientNote> getNoteByNoteId(String Id);
     Boolean deleteNoteByNoteId(Long noteId);
 }

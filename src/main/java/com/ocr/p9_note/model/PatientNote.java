@@ -11,15 +11,13 @@ import java.time.LocalDateTime;
 @Document(collection = "note")
 public class PatientNote {
 
-    // To set Id : PatientNote.setId(sequenceGenerator.generateSequence(PatientNote.SEQUENCE_NAME));
-
     @Transient
     public static final String SEQUENCE_NAME = "notes_sequence";
 
     @Id
-    private Long noteId;
-    @Field("_id")
-    private String id;
+    private String noteId;
+    //@Field("_id")
+    //private String id;
     private Integer patientId;
     @Size(min = 3, max = 100, message = "title size between 3 and 100")
     private String title;
@@ -28,9 +26,9 @@ public class PatientNote {
     private LocalDateTime updateDate;
 
     public PatientNote() {
-
     }
 
+    /*
     public String getId() {
         return id;
     }
@@ -39,11 +37,13 @@ public class PatientNote {
         this.id = id;
     }
 
-    public Long getNoteId() {
+     */
+
+    public String getNoteId() {
         return noteId;
     }
 
-    public void setNoteId(Long noteId) {
+    public void setNoteId(String noteId) {
         this.noteId = noteId;
     }
 
@@ -91,7 +91,7 @@ public class PatientNote {
     public String toString() {
         return "PatientNote{" +
                 "noteId=" + noteId +
-                ", id='" + id + '\'' +
+                //", id='" + id + '\'' +
                 ", patientId=" + patientId +
                 ", title='" + title + '\'' +
                 ", note='" + note + '\'' +

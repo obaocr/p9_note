@@ -1,6 +1,5 @@
 package com.ocr.p9_note.service;
 
-import com.mongodb.WriteResult;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.repository.NoteRepository;
 import org.slf4j.Logger;
@@ -9,16 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 // TODO alimenter les dates creation / maj
 
 @Service
-public class NoteServiceImpl implements  NoteService {
+public class NoteServiceImpl implements NoteService {
 
     private Logger logger = LoggerFactory.getLogger(NoteServiceImpl.class);
 
@@ -39,21 +38,24 @@ public class NoteServiceImpl implements  NoteService {
     }
 
     @Override
-    public Long addNote(PatientNote note) {
+    public String addNote(PatientNote note) {
         logger.debug("P9 addNote :" + note.toString());
-        note.setNoteId(sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME));
+        Long seqValue = sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME);
+        note.setNoteId(seqValue.toString());
         return noteRepository.save(note).getNoteId();
     }
 
-    // TODO fait un insert avec la même valeur !!!!
     @Override
     public Boolean updateNote(PatientNote note) {
         logger.debug("P9 updateNote :" + note.toString());
-        PatientNote patientNote =  noteRepository.findPatientNoteByNoteId(note.getNoteId()).get(0);
-        if(patientNote != null) {
-            patientNote.setTitle(note.getTitle());
-            patientNote.setNote(note.getNote());
-            noteRepository.save(patientNote);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("noteId").is(note.getNoteId()));
+        PatientNote patientNote = mongoOperations.findOne(query, PatientNote.class);
+        if (patientNote != null) {
+            Update update = new Update();
+            update.set("title", note.getTitle());
+            update.set("note", note.getNote());
+            mongoOperations.updateFirst(query, update, PatientNote.class);
             return true;
         }
         return false;
@@ -70,7 +72,7 @@ public class NoteServiceImpl implements  NoteService {
     }
 
     @Override
-    public List<PatientNote> getNoteByNoteId(Long noteId) {
+    public List<PatientNote> getNoteByNoteId(String noteId) {
         logger.debug("P9 getNoteByNoteId :" + noteId);
         return noteRepository.findPatientNoteByNoteId(noteId);
     }
