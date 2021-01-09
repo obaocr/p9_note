@@ -16,8 +16,6 @@ public class PatientNote {
 
     @Id
     private String noteId;
-    //@Field("_id")
-    //private String id;
     private Integer patientId;
     @Size(min = 3, max = 100, message = "title size between 3 and 100")
     private String title;
@@ -27,17 +25,6 @@ public class PatientNote {
 
     public PatientNote() {
     }
-
-    /*
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-     */
 
     public String getNoteId() {
         return noteId;
@@ -91,7 +78,6 @@ public class PatientNote {
     public String toString() {
         return "PatientNote{" +
                 "noteId=" + noteId +
-                //", id='" + id + '\'' +
                 ", patientId=" + patientId +
                 ", title='" + title + '\'' +
                 ", note='" + note + '\'' +

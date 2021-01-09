@@ -1,0 +1,97 @@
+package com.ocr.p9_note.service;
+
+import com.ocr.p9_note.model.PatientNote;
+import com.ocr.p9_note.repository.NoteRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+// TODO suite des tests  à complater
+
+@ExtendWith(SpringExtension.class)
+public class PatientNoteServiceTest {
+
+    @Autowired
+    private NoteService noteService;
+
+    @MockBean
+    private NoteRepository noteRepository;
+
+    @MockBean
+    private MongoOperations mongoOperations;
+
+    @MockBean
+    private SequenceGeneratorService sequenceGeneratorService;
+
+    @TestConfiguration
+    static class NoteServiceTestsContextConfiguration {
+
+        @Bean
+        public NoteServiceImpl PatientNoteService() {
+            return new NoteServiceImpl();
+        }
+
+    }
+
+    @Test
+    void patientNoteGetAll() {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("test");
+        patientNote.setNote("test de note");
+        List<PatientNote> patientNotes = new ArrayList<>();
+        patientNotes.add(patientNote);
+        Mockito.when(noteRepository.findAll()).thenReturn(patientNotes);
+        long seq = 1;
+        Mockito.when(sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME)).thenReturn(seq);
+        List<PatientNote> listPatientNotes = noteService.getAllNotes();
+        assertTrue(listPatientNotes.size() > 0);
+    }
+
+    @Test
+    void patientNoteGetByNoteId() {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("test");
+        patientNote.setNote("test de note");
+        List<PatientNote> patientNotes = new ArrayList<>();
+        patientNotes.add(patientNote);
+        Mockito.when(noteRepository.findPatientNoteByNoteId("1")).thenReturn(patientNotes);
+        List<PatientNote> listPatientNotes = noteService.getNoteByNoteId("1");
+        assertTrue(listPatientNotes.size() > 0);
+    }
+
+    @Test
+    void patientNoteGetByPatientId() {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("test");
+        patientNote.setNote("test de note");
+        List<PatientNote> patientNotes = new ArrayList<>();
+        patientNotes.add(patientNote);
+
+        Query searchQuery = new Query();
+        searchQuery.addCriteria(Criteria.where("patientId").is(1));
+
+        Mockito.when(mongoOperations.find(searchQuery, PatientNote.class)).thenReturn(patientNotes);
+        List<PatientNote> listPatientNotes = noteService.getNoteByPatientId(1);
+        assertTrue(listPatientNotes.size() > 0);
+    }
+
+}
