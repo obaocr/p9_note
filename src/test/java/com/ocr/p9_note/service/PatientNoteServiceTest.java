@@ -1,8 +1,13 @@
 package com.ocr.p9_note.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.repository.NoteRepository;
+import org.bson.BsonObjectId;
+import org.bson.BsonValue;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -14,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -116,6 +122,26 @@ public class PatientNoteServiceTest {
         searchQuery.addCriteria(Criteria.where("noteId").is("1"));
         Mockito.when(mongoOperations.remove(searchQuery, PatientNote.class)).thenReturn(DeleteResult.acknowledged(1));
         Boolean result = noteService.deleteNoteByNoteId("1");
+        assertTrue(result == true);
+    }
+
+    @Test
+    void updatePatientNoteTest() {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("new title");
+        patientNote.setNote("new note");
+        Query query = new Query();
+        query.addCriteria(Criteria.where("noteId").is("1"));
+        Mockito.when(mongoOperations.findOne(query, PatientNote.class)).thenReturn(patientNote);
+        Update update = new Update();
+        update.set("title", "new title");
+        update.set("note", "new note");
+        long mockResult = 1;
+        BsonObjectId bsonObjectId = new BsonObjectId(new ObjectId("5ff72f561de2b76348ef1804"));
+        Mockito.when(mongoOperations.updateFirst(query, update, PatientNote.class)).thenReturn(UpdateResult.acknowledged(mockResult,mockResult,bsonObjectId));
+        Boolean result = noteService.updateNote(patientNote);
         assertTrue(result == true);
     }
 
