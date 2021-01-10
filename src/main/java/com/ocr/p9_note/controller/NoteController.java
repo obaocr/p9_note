@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+// TODO noteService peut pas être en autowire ?
+
 @RestController
 public class NoteController {
 
@@ -55,7 +57,7 @@ public class NoteController {
     }
 
     @DeleteMapping("/notes/{Id}")
-    public Boolean deleteNoteByNoteId(@PathVariable("Id") Long Id) {
+    public Boolean deleteNoteByNoteId(@PathVariable("Id") String Id) {
         logger.debug("P9 delete Note by Note Id" + Id);
         noteService.deleteNoteByNoteId(Id);
         return true;

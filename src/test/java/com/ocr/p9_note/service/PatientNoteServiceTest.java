@@ -1,10 +1,12 @@
 package com.ocr.p9_note.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.repository.NoteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,7 +42,7 @@ public class PatientNoteServiceTest {
     static class NoteServiceTestsContextConfiguration {
 
         @Bean
-        public NoteServiceImpl PatientNoteService() {
+        public NoteService PatientNoteService() {
             return new NoteServiceImpl();
         }
 
@@ -92,6 +94,29 @@ public class PatientNoteServiceTest {
         Mockito.when(mongoOperations.find(searchQuery, PatientNote.class)).thenReturn(patientNotes);
         List<PatientNote> listPatientNotes = noteService.getNoteByPatientId(1);
         assertTrue(listPatientNotes.size() > 0);
+    }
+
+    @Test
+    void addPatientNoteTest() {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("test");
+        patientNote.setNote("test de note");
+        long seqValue = 1;
+        Mockito.when(sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME)).thenReturn(seqValue);
+        Mockito.when(noteRepository.save(patientNote)).thenReturn(patientNote);
+        String result = noteService.addNote(patientNote);
+        assertTrue(result.equals("1"));
+    }
+
+    @Test
+    void deletePatientNoteTest() {
+        Query searchQuery = new Query();
+        searchQuery.addCriteria(Criteria.where("noteId").is("1"));
+        Mockito.when(mongoOperations.remove(searchQuery, PatientNote.class)).thenReturn(DeleteResult.acknowledged(1));
+        Boolean result = noteService.deleteNoteByNoteId("1");
+        assertTrue(result == true);
     }
 
 }

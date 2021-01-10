@@ -1,5 +1,7 @@
 package com.ocr.p9_note.service;
 
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.repository.NoteRepository;
 import org.slf4j.Logger;
@@ -55,8 +57,10 @@ public class NoteServiceImpl implements NoteService {
             Update update = new Update();
             update.set("title", note.getTitle());
             update.set("note", note.getNote());
-            mongoOperations.updateFirst(query, update, PatientNote.class);
-            return true;
+            UpdateResult updateResult = mongoOperations.updateFirst(query, update, PatientNote.class);
+            if(updateResult.getModifiedCount() > 0) {
+                return true;
+            }
         }
         return false;
     }
@@ -78,13 +82,14 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Boolean deleteNoteByNoteId(Long noteId) {
-        System.out.println("****** deleteNoteByNoteId Id = " + noteId);
+    public Boolean deleteNoteByNoteId(String noteId) {
         logger.debug("P9 deleteNoteByNoteId :" + noteId);
         Query searchQuery = new Query();
         searchQuery.addCriteria(Criteria.where("noteId").is(noteId));
-        mongoOperations.remove(searchQuery, PatientNote.class);
-        return true;
+        DeleteResult deleteResult = mongoOperations.remove(searchQuery, PatientNote.class);
+        if(deleteResult.getDeletedCount() > 0) {
+            return true;
+        }
+        return false;
     }
-
 }

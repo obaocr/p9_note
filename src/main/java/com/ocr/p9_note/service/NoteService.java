@@ -11,5 +11,5 @@ public interface NoteService {
     Boolean updateNote(PatientNote note);
     List<PatientNote> getNoteByPatientId(Integer Id);
     List<PatientNote> getNoteByNoteId(String Id);
-    Boolean deleteNoteByNoteId(Long noteId);
+    Boolean deleteNoteByNoteId(String noteId);
 }

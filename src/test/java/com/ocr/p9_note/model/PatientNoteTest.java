@@ -19,6 +19,7 @@ public class PatientNoteTest {
         assertTrue(patientNote.getPatientId() == 1);
         assertTrue(patientNote.getTitle() == "test");
         assertTrue(patientNote.getNote() == "test de note");
-
+        assertTrue(patientNote.toString().contains("test de note"));
     }
+
 }
