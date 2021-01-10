@@ -5,13 +5,10 @@ import com.mongodb.client.result.UpdateResult;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.repository.NoteRepository;
 import org.bson.BsonObjectId;
-import org.bson.BsonValue;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,12 +19,13 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-// TODO suite des tests  à complater
+// TODO suite des tests  à compléter
 
 @ExtendWith(SpringExtension.class)
 public class PatientNoteServiceTest {
@@ -127,20 +125,23 @@ public class PatientNoteServiceTest {
 
     @Test
     void updatePatientNoteTest() {
+        LocalDateTime dtUpdate = LocalDateTime.now();
         PatientNote patientNote = new PatientNote();
         patientNote.setNoteId("1");
         patientNote.setPatientId(1);
         patientNote.setTitle("new title");
         patientNote.setNote("new note");
+        patientNote.setUpdateDate(dtUpdate);
         Query query = new Query();
         query.addCriteria(Criteria.where("noteId").is("1"));
         Mockito.when(mongoOperations.findOne(query, PatientNote.class)).thenReturn(patientNote);
         Update update = new Update();
         update.set("title", "new title");
         update.set("note", "new note");
+        update.set("updateDate", dtUpdate.toString());
         long mockResult = 1;
         BsonObjectId bsonObjectId = new BsonObjectId(new ObjectId("5ff72f561de2b76348ef1804"));
-        Mockito.when(mongoOperations.updateFirst(query, update, PatientNote.class)).thenReturn(UpdateResult.acknowledged(mockResult,mockResult,bsonObjectId));
+        Mockito.when(mongoOperations.updateFirst(query, update, PatientNote.class)).thenReturn(UpdateResult.acknowledged(mockResult, mockResult, bsonObjectId));
         Boolean result = noteService.updateNote(patientNote);
         assertTrue(result == true);
     }

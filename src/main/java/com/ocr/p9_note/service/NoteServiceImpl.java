@@ -13,10 +13,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-// TODO alimenter les dates creation / maj
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -44,6 +43,9 @@ public class NoteServiceImpl implements NoteService {
         logger.debug("P9 addNote :" + note.toString());
         Long seqValue = sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME);
         note.setNoteId(seqValue.toString());
+        LocalDateTime dtUpdate = LocalDateTime.now();
+        note.setCreateDate(dtUpdate);
+        note.setUpdateDate(dtUpdate);
         return noteRepository.save(note).getNoteId();
     }
 
@@ -53,12 +55,16 @@ public class NoteServiceImpl implements NoteService {
         Query query = new Query();
         query.addCriteria(Criteria.where("noteId").is(note.getNoteId()));
         PatientNote patientNote = mongoOperations.findOne(query, PatientNote.class);
+        if(note.getUpdateDate() == null) {
+            note.setUpdateDate(LocalDateTime.now());
+        }
         if (patientNote != null) {
             Update update = new Update();
             update.set("title", note.getTitle());
             update.set("note", note.getNote());
+            update.set("updateDate", note.getUpdateDate().toString());
             UpdateResult updateResult = mongoOperations.updateFirst(query, update, PatientNote.class);
-            if(updateResult.getModifiedCount() > 0) {
+            if (updateResult.getModifiedCount() > 0) {
                 return true;
             }
         }
@@ -87,7 +93,7 @@ public class NoteServiceImpl implements NoteService {
         Query searchQuery = new Query();
         searchQuery.addCriteria(Criteria.where("noteId").is(noteId));
         DeleteResult deleteResult = mongoOperations.remove(searchQuery, PatientNote.class);
-        if(deleteResult.getDeletedCount() > 0) {
+        if (deleteResult.getDeletedCount() > 0) {
             return true;
         }
         return false;
