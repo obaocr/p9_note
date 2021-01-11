@@ -2,12 +2,12 @@ package com.ocr.p9_note.controller;
 
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.service.NoteService;
+import com.ocr.p9_note.utils.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 // TODO noteService peut pas être en autowire ?
@@ -45,14 +45,16 @@ public class NoteController {
     }
 
     @PostMapping("/notes")
-    public String addNote(@RequestBody @Valid PatientNote note) {
+    public String addNote(@RequestBody PatientNote note) {
         logger.debug("P9 add note :" + note.toString());
+        Check.checkNote(note);
         return noteService.addNote(note);
     }
 
     @PutMapping("/notes")
-    public Boolean updateNote(@RequestBody @Valid PatientNote note) {
+    public Boolean updateNote(@RequestBody PatientNote note) {
         logger.debug("P9 update note :" + note.toString());
+        Check.checkNote(note);
         return noteService.updateNote(note);
     }
 

@@ -110,6 +110,21 @@ public class PatientNoteControllerTest {
     }
 
     @Test
+    void postNoteShouldReturn_KO() throws Exception {
+        PatientNote patientNote = new PatientNote();
+        patientNote.setNoteId("1");
+        patientNote.setPatientId(1);
+        patientNote.setTitle("");
+        patientNote.setNote("test de note");
+        //
+        ObjectMapper objectMapper = new ObjectMapper();
+        String patientJSON = objectMapper.writeValueAsString(patientNote);
+        //
+        this.mockMvc.perform(post("/notes").contentType(MediaType.APPLICATION_JSON).content(patientJSON))
+                .andDo(print()).andExpect(status().isBadRequest()).andReturn();
+    }
+
+    @Test
     void putPersonShouldReturnOK() throws Exception {
         PatientNote patientNote = new PatientNote();
         patientNote.setNoteId("1");

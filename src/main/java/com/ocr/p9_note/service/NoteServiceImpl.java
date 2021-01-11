@@ -1,5 +1,6 @@
 package com.ocr.p9_note.service;
 
+import com.ocr.p9_note.utils.EntityNotFoundException;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.ocr.p9_note.model.PatientNote;
@@ -55,7 +56,7 @@ public class NoteServiceImpl implements NoteService {
         Query query = new Query();
         query.addCriteria(Criteria.where("noteId").is(note.getNoteId()));
         PatientNote patientNote = mongoOperations.findOne(query, PatientNote.class);
-        if(note.getUpdateDate() == null) {
+        if (note.getUpdateDate() == null) {
             note.setUpdateDate(LocalDateTime.now());
         }
         if (patientNote != null) {
@@ -67,8 +68,11 @@ public class NoteServiceImpl implements NoteService {
             if (updateResult.getModifiedCount() > 0) {
                 return true;
             }
+        } else {
+            throw new EntityNotFoundException("note not found for Id: " + note.getNoteId());
         }
         return false;
+
     }
 
     @Override
@@ -78,13 +82,21 @@ public class NoteServiceImpl implements NoteService {
         Query searchQuery = new Query();
         searchQuery.addCriteria(Criteria.where("patientId").is(patientId));
         patientNotes = mongoOperations.find(searchQuery, PatientNote.class);
+        if (patientNotes.size() == 0) {
+            throw new EntityNotFoundException("note not found for Patient: " + patientId);
+        }
         return patientNotes;
     }
 
     @Override
     public List<PatientNote> getNoteByNoteId(String noteId) {
         logger.debug("P9 getNoteByNoteId :" + noteId);
-        return noteRepository.findPatientNoteByNoteId(noteId);
+        List<PatientNote> patientNotes = noteRepository.findPatientNoteByNoteId(noteId);
+        if (patientNotes.size() == 0) {
+            throw new EntityNotFoundException("note not found for noteId: " + noteId);
+        } else {
+            return patientNotes;
+        }
     }
 
     @Override
@@ -96,6 +108,10 @@ public class NoteServiceImpl implements NoteService {
         if (deleteResult.getDeletedCount() > 0) {
             return true;
         }
-        return false;
+        if (deleteResult.getDeletedCount() == 0) {
+            throw new EntityNotFoundException("note not found for noteId: " + noteId);
+        } else {
+            return true;
+        }
     }
 }

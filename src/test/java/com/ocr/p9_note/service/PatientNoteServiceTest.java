@@ -83,6 +83,19 @@ public class PatientNoteServiceTest {
     }
 
     @Test
+    void patientNoteGetByNoteId_NotFound() {
+        List<PatientNote> patientNotes = new ArrayList<>();
+        Mockito.when(noteRepository.findPatientNoteByNoteId("1")).thenReturn(patientNotes);
+        try {
+            List<PatientNote> listPatientNotes = noteService.getNoteByNoteId("1");
+        } catch (Exception e) {
+            assertTrue(e.toString().contains("note not found for noteId"));
+        }
+
+
+    }
+
+    @Test
     void patientNoteGetByPatientId() {
         PatientNote patientNote = new PatientNote();
         patientNote.setNoteId("1");

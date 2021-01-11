@@ -1,4 +1,4 @@
-package Utils;
+package com.ocr.p9_note.utils;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
