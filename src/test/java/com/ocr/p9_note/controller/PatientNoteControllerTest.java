@@ -41,24 +41,6 @@ public class PatientNoteControllerTest {
     }
 
     @Test
-    void getAllNotesShouldReturnOK() throws Exception {
-        PatientNote patientNote = new PatientNote();
-        patientNote.setNoteId("1");
-        patientNote.setPatientId(1);
-        patientNote.setTitle("test");
-        patientNote.setNote("test de note");
-        List<PatientNote> patientNotes = new ArrayList<>();
-        patientNotes.add(patientNote);
-        Mockito.when(noteService.getAllNotes()).thenReturn(patientNotes);
-
-        this.mockMvc.perform(get("/notes")
-                .characterEncoding("utf-8"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-
-    @Test
     void getNotesByNoteIdShouldReturnOK() throws Exception {
         PatientNote patientNote = new PatientNote();
         patientNote.setNoteId("1");

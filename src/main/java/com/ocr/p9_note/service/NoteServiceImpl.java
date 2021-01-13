@@ -72,7 +72,6 @@ public class NoteServiceImpl implements NoteService {
             throw new EntityNotFoundException("note not found for Id: " + note.getNoteId());
         }
         return false;
-
     }
 
     @Override

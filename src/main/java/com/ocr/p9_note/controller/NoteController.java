@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 // TODO noteService peut pas être en autowire ?
 
@@ -26,15 +27,18 @@ public class NoteController {
         return "P9 Note Home";
     }
 
-    @GetMapping("/notes")
-    public List<PatientNote> getAllNotes() {
-        logger.debug("P9 get All Notes");
-        return noteService.getAllNotes();
-    }
-
     @GetMapping("/notes/patient/{patientId}")
     public List<PatientNote> getNoteByPatientId(@PathVariable Integer patientId) {
         logger.debug("P9 get Note by Patient Id" + patientId);
+        return noteService.getNoteByPatientId(patientId);
+    }
+
+    @GetMapping("/notes")
+    public List<PatientNote> getNoteSearchPatientId(@RequestParam(required = false) Integer patientId) {
+        logger.debug("P9 get searchNote by Patient Id" + patientId);
+        if (Objects.isNull(patientId)) {
+            return noteService.getAllNotes();
+        }
         return noteService.getNoteByPatientId(patientId);
     }
 

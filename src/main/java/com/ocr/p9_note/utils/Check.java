@@ -17,5 +17,4 @@ public class Check {
             throw new EntityIllegalArgumentException("All fields are mandatory for a PatientNote");
         }
     }
-
 }

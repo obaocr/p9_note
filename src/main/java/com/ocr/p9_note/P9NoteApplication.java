@@ -3,7 +3,8 @@ package com.ocr.p9_note;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO http custo pour not found et illegal
+// TODO tests intg avec bdd de test
+// TODO http://localhost:8049/notes/patient/3 à transformer en query
 
 @SpringBootApplication
 public class P9NoteApplication {
