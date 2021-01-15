@@ -7,6 +7,10 @@ cf. https://docs.mongodb.com/manual/reference/method/db.createCollection/
 2. Create a collection : PatientNote (db.createCollection("note"))
 2. Create a collection : database_sequences (db.createCollection("database_sequences"))
 
+Commandes mongo
+1. show databases
+2. use p9note
+3. show collections
 
 db.note.drop()
 db.note.countDocuments({})

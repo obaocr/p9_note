@@ -3,8 +3,7 @@ package com.ocr.p9_note;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO tests intg avec bdd de test
-// TODO http://localhost:8049/notes/patient/3 à transformer en query
+// TODO Gestion user pour la BDD Mongo
 
 @SpringBootApplication
 public class P9NoteApplication {
