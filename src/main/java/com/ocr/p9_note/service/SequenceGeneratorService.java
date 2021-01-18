@@ -12,7 +12,9 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-
+/**
+ * Services for the note sequence
+ */
 @Service
 public class SequenceGeneratorService {
 

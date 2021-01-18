@@ -4,6 +4,9 @@ import com.ocr.p9_note.model.PatientNote;
 
 import java.util.List;
 
+/**
+ * Interface for note services
+ */
 public interface NoteService {
 
     List<PatientNote> getAllNotes();

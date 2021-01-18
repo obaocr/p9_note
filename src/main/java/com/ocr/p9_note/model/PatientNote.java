@@ -7,6 +7,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+/**
+ * Model for note
+ */
 @Document(collection = "note")
 public class PatientNote {
 

@@ -4,6 +4,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 
+/**
+ * Model for the databases_sequence for Note ID
+ */
 @Document(collection = "database_sequences")
 public class DatabaseSequence {
 

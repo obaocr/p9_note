@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation for note services
+ */
 @Service
 public class NoteServiceImpl implements NoteService {
 
@@ -113,4 +116,5 @@ public class NoteServiceImpl implements NoteService {
             return true;
         }
     }
+
 }

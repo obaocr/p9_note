@@ -13,6 +13,9 @@ import java.util.Objects;
 
 // TODO noteService peut pas être en autowire ?
 
+/**
+ * Controller for notes
+ */
 @RestController
 public class NoteController {
 
