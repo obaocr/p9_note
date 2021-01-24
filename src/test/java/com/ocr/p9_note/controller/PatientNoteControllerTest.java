@@ -3,7 +3,6 @@ package com.ocr.p9_note.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ocr.p9_note.model.PatientNote;
 import com.ocr.p9_note.service.NoteService;
-import com.ocr.p9_note.service.NoteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -31,8 +31,11 @@ public class NoteController {
     }
 
     @GetMapping("/notes/patient/{patientId}")
-    public List<PatientNote> getNoteByPatientId(@PathVariable Integer patientId) {
-        logger.debug("P9 get Note by Patient Id" + patientId);
+    public List<PatientNote> getNotesByPatientId(@PathVariable Integer patientId) {
+        logger.debug("P9 get searchNote by Patient Id" + patientId);
+        if (Objects.isNull(patientId)) {
+            return noteService.getAllNotes();
+        }
         return noteService.getNoteByPatientId(patientId);
     }
 

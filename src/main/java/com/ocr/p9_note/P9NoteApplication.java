@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // TODO Gestion user pour la BDD Mongo... + Docker
+// TODO test intg ctrl / mockmvc sans mocker les svc
 
 @SpringBootApplication
 public class P9NoteApplication {

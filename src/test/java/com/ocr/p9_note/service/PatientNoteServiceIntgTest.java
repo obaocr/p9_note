@@ -1,6 +1,7 @@
 package com.ocr.p9_note.service;
 
 import com.ocr.p9_note.model.PatientNote;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ public class PatientNoteServiceIntgTest {
     @Autowired
     private NoteService noteService;
 
+    @Disabled
     @Test
     void testAddNote() {
         PatientNote patientNote = new PatientNote();
@@ -26,6 +28,7 @@ public class PatientNoteServiceIntgTest {
         assertTrue(noteService.getNoteByNoteId(result.toString()).size() == 1);
     }
 
+    @Disabled
     @Test
     void addAndDeleteNote() {
         PatientNote patientNote = new PatientNote();
