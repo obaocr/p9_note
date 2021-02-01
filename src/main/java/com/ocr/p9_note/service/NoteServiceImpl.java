@@ -43,14 +43,14 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public String addNote(PatientNote note) {
+    public PatientNote addNote(PatientNote note) {
         logger.debug("P9 addNote :" + note.toString());
         Long seqValue = sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME);
         note.setNoteId(seqValue.toString());
         LocalDateTime dtUpdate = LocalDateTime.now();
         note.setCreateDate(dtUpdate);
         note.setUpdateDate(dtUpdate);
-        return noteRepository.save(note).getNoteId();
+        return noteRepository.save(note);
     }
 
     @Override
@@ -91,13 +91,13 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<PatientNote> getNoteByNoteId(String noteId) {
+    public PatientNote getNoteByNoteId(String noteId) {
         logger.debug("P9 getNoteByNoteId :" + noteId);
         List<PatientNote> patientNotes = noteRepository.findPatientNoteByNoteId(noteId);
         if (patientNotes.size() == 0) {
             throw new EntityNotFoundException("note not found for noteId: " + noteId);
         } else {
-            return patientNotes;
+            return patientNotes.get(0);
         }
     }
 

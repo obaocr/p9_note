@@ -49,13 +49,13 @@ public class NoteController {
     }
 
     @GetMapping("/notes/{noteId}")
-    public List<PatientNote> getNoteByNoteId(@PathVariable("noteId") String noteId) {
+    public PatientNote getNoteByNoteId(@PathVariable("noteId") String noteId) {
         logger.debug("P9 get Note by Note Id" + noteId);
         return noteService.getNoteByNoteId(noteId);
     }
 
     @PostMapping("/notes")
-    public String addNote(@RequestBody PatientNote note) {
+    public PatientNote addNote(@RequestBody PatientNote note) {
         logger.debug("P9 add note :" + note.toString());
         Check.checkNote(note);
         return noteService.addNote(note);
