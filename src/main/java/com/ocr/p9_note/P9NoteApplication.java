@@ -3,7 +3,7 @@ package com.ocr.p9_note;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO Gestion user pour la BDD Mongo... + Docker
+// TODO Gestion user pour la BDD Mongo... + Docker  https://stackoverflow.com/questions/4881208/how-to-secure-mongodb-with-username-and-password
 
 @SpringBootApplication
 public class P9NoteApplication {
