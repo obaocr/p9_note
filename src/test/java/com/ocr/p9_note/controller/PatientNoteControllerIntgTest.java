@@ -22,9 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PatientNoteControllerIntgTest {
 
     @Autowired
-    private NoteService noteService;
-
-    @Autowired
     private MockMvc mockMvc;
 
     @Disabled

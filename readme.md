@@ -3,9 +3,45 @@ P9  Notes for a patient
 # MongoDB Init
 cf. https://www.freecodecamp.org/news/learn-mongodb-a4ce205e7739/
 cf. https://docs.mongodb.com/manual/reference/method/db.createCollection/
-1. Create a DB : use p9note
-2. Create a collection : PatientNote (db.createCollection("note"))
-2. Create a collection : database_sequences (db.createCollection("database_sequences"))
+cf. https://docs.mongodb.com/manual/tutorial/enable-authentication/
+
+1. Create the admin user
+launch mongod in command line
+launch mongo in command line 
+from mongo:
+use admin
+db.createUser(
+  {
+    user: "root1",
+    pwd: "123456",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+db.adminCommand( { shutdown: 1 } )
+
+2. Create a DB : use p9note and a user
+in command line : mongod --auth --port 27017
+in command line : mongo --port 27017 --authenticationDatabase "admin" -u "root1" -p
+from mongo : 
+db.createUser(
+  {
+    user: "user1",
+    pwd:  "123456",
+    roles: [ { role: "readWrite", db: "p9note" } ]
+  }
+)
+use p9note
+db.createCollection("note") // Create a collection : PatientNote
+db.createCollection("database_sequences") // Create a collection : database_sequences
+
+use p9note_test
+db.createUser(
+  {
+    user: "usertest",
+    pwd:  "123456",
+    roles: [ { role: "readWrite", db: "p9note_test" } ]
+  }
+)
 
 Commandes mongo
 1. "show databases" ti show the list of databases
@@ -16,6 +52,7 @@ Commandes mongo
 6. "db.note.countDocuments({})" to count the number of documents
 7. others / db.note.insert( { "patientId": "1", "title": "Practitioner's notes/recommendations", "note": "Patient states that they are 'feeling terrific" } )
 / db.note.find({"patientId" : "1"})
+
 
 # P9_note Backend
 This application is a medical web services application, il allows CRUD Notes for a patient : 

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-// TODO noteService peut pas être en autowire ?
-
 /**
  * Controller for notes
  */
