@@ -53,7 +53,6 @@ Commandes mongo
 7. others / db.note.insert( { "patientId": "1", "title": "Practitioner's notes/recommendations", "note": "Patient states that they are 'feeling terrific" } )
 / db.note.find({"patientId" : "1"})
 
-
 # P9_note Backend
 This application is a medical web services application, il allows CRUD Notes for a patient : 
 1. Create a Note
@@ -62,19 +61,16 @@ This application is a medical web services application, il allows CRUD Notes for
 4. Get a Note
 5. Get all Notes
 
-
 ## Technical:
 1. Framework: Spring Boot v2.2.5
 2. Java 8
 3. Mongo DB 4.2.X
 4. Maven 3.6
 
-
 ## Setup 
 1. Setup a database MongoDB with "p9note" and "p9note_test" databases for developements and tests
 3. Install Java: https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
 4. Spring : https://spring.io
-
 
 ## Docker
 The Docker file has been set, this application is enabled for Docker
@@ -84,7 +80,6 @@ Docker commands are (type from root folder P9_note):
 2. Run the image : "docker run -p 8049:8049 notes"
 3. Stop the image  : "docker stop notes ."
 4. Remove the image :  "docker rmi -f notes"
-
 
 ## Unit Test
 1. Unit tests are written for Utils, Domain, Repository and Controller
@@ -100,8 +95,9 @@ Docker commands are (type from root folder P9_note):
 
 
 ## Run & tests
-1. Run P9NoteApplication
-2. Open in a browser http://localhost:8049 for test environment
+1. Run the database : mongod --auth --port 27017
+2. Run P9NoteApplication
+3. Open in a browser http://localhost:8049 for test environment
 
 
 ### Other consideration
