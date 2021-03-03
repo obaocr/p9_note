@@ -15,10 +15,10 @@ public class PatientNoteTest {
         patientNote.setTitle("test");
         patientNote.setNote("test de note");
         assertTrue(patientNote != null);
-        assertTrue(patientNote.getNoteId() == "1");
+        assertTrue(patientNote.getNoteId().equals("1"));
         assertTrue(patientNote.getPatientId() == 1);
-        assertTrue(patientNote.getTitle() == "test");
-        assertTrue(patientNote.getNote() == "test de note");
+        assertTrue(patientNote.getTitle().equals("test"));
+        assertTrue(patientNote.getNote().equals("test de note"));
         assertTrue(patientNote.toString().contains("test de note"));
     }
 
