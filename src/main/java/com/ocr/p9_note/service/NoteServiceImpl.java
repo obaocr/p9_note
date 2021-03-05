@@ -84,9 +84,6 @@ public class NoteServiceImpl implements NoteService {
         Query searchQuery = new Query();
         searchQuery.addCriteria(Criteria.where("patientId").is(patientId));
         patientNotes = mongoOperations.find(searchQuery, PatientNote.class);
-        if (patientNotes.size() == 0) {
-            throw new EntityNotFoundException("note not found for Patient: " + patientId);
-        }
         return patientNotes;
     }
 
