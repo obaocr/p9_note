@@ -25,8 +25,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-// TODO suite des tests  à compléter
-
 @ExtendWith(SpringExtension.class)
 public class PatientNoteServiceTest {
 
@@ -78,8 +76,8 @@ public class PatientNoteServiceTest {
         List<PatientNote> patientNotes = new ArrayList<>();
         patientNotes.add(patientNote);
         Mockito.when(noteRepository.findPatientNoteByNoteId("1")).thenReturn(patientNotes);
-        List<PatientNote> listPatientNotes = noteService.getNoteByNoteId("1");
-        assertTrue(listPatientNotes.size() > 0);
+        PatientNote patientNote1 = noteService.getNoteByNoteId("1");
+        assertTrue(patientNote1 != null);
     }
 
     @Test
@@ -87,7 +85,7 @@ public class PatientNoteServiceTest {
         List<PatientNote> patientNotes = new ArrayList<>();
         Mockito.when(noteRepository.findPatientNoteByNoteId("1")).thenReturn(patientNotes);
         try {
-            List<PatientNote> listPatientNotes = noteService.getNoteByNoteId("1");
+            PatientNote patientNote = noteService.getNoteByNoteId("1");
         } catch (Exception e) {
             assertTrue(e.toString().contains("note not found for noteId"));
         }
@@ -123,7 +121,7 @@ public class PatientNoteServiceTest {
         long seqValue = 1;
         Mockito.when(sequenceGeneratorService.generateSequence(PatientNote.SEQUENCE_NAME)).thenReturn(seqValue);
         Mockito.when(noteRepository.save(patientNote)).thenReturn(patientNote);
-        String result = noteService.addNote(patientNote);
+        String result = noteService.addNote(patientNote).getNoteId();
         assertTrue(result.equals("1"));
     }
 

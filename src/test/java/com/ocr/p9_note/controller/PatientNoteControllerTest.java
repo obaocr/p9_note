@@ -45,9 +45,7 @@ public class PatientNoteControllerTest {
         patientNote.setPatientId(1);
         patientNote.setTitle("test");
         patientNote.setNote("test de note");
-        List<PatientNote> patientNotes = new ArrayList<>();
-        patientNotes.add(patientNote);
-        Mockito.when(noteService.getNoteByNoteId("1")).thenReturn(patientNotes);
+        Mockito.when(noteService.getNoteByNoteId("1")).thenReturn(patientNote);
 
         this.mockMvc.perform(get("/notes/1")
                 .characterEncoding("utf-8"))

@@ -24,8 +24,8 @@ public class PatientNoteServiceIntgTest {
         patientNote.setPatientId(1);
         patientNote.setTitle("test");
         patientNote.setNote("test de note");
-        String result = noteService.addNote(patientNote);
-        assertTrue(noteService.getNoteByNoteId(result.toString()).size() == 1);
+        String result = noteService.addNote(patientNote).getNoteId();
+        assertTrue(noteService.getNoteByNoteId(result.toString()) != null);
     }
 
     @Disabled
@@ -36,10 +36,8 @@ public class PatientNoteServiceIntgTest {
         patientNote.setPatientId(1);
         patientNote.setTitle("test");
         patientNote.setNote("test de note");
-        String result = noteService.addNote(patientNote);
-        assertTrue(noteService.getNoteByNoteId(result.toString()).size() == 1);
+        String result = noteService.addNote(patientNote).getNoteId();
+        assertTrue(noteService.getNoteByNoteId(result.toString()) != null);
         assertTrue(noteService.deleteNoteByNoteId(result.toString()) == true);
     }
-
-
 }

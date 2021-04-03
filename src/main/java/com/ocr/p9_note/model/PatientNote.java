@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
- * Model for note
+ * Model for notes
  */
 @Document(collection = "note")
 public class PatientNote {

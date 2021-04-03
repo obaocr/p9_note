@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-// TODO noteService peut pas être en autowire ?
 
 /**
  * Controller for notes
@@ -49,13 +48,13 @@ public class NoteController {
     }
 
     @GetMapping("/notes/{noteId}")
-    public List<PatientNote> getNoteByNoteId(@PathVariable("noteId") String noteId) {
+    public PatientNote getNoteByNoteId(@PathVariable("noteId") String noteId) {
         logger.debug("P9 get Note by Note Id" + noteId);
         return noteService.getNoteByNoteId(noteId);
     }
 
     @PostMapping("/notes")
-    public String addNote(@RequestBody PatientNote note) {
+    public PatientNote addNote(@RequestBody PatientNote note) {
         logger.debug("P9 add note :" + note.toString());
         Check.checkNote(note);
         return noteService.addNote(note);

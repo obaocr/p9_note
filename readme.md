@@ -3,9 +3,45 @@ P9  Notes for a patient
 # MongoDB Init
 cf. https://www.freecodecamp.org/news/learn-mongodb-a4ce205e7739/
 cf. https://docs.mongodb.com/manual/reference/method/db.createCollection/
-1. Create a DB : use p9note
-2. Create a collection : PatientNote (db.createCollection("note"))
-2. Create a collection : database_sequences (db.createCollection("database_sequences"))
+cf. https://docs.mongodb.com/manual/tutorial/enable-authentication/
+
+1. Create the admin user
+launch mongod in command line
+launch mongo in command line 
+from mongo:
+use admin
+db.createUser(
+  {
+    user: "root1",
+    pwd: "123456",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+db.adminCommand( { shutdown: 1 } )
+
+2. Create a DB : use p9note and a user
+in command line : mongod --auth --port 27017
+in command line : mongo --port 27017 --authenticationDatabase "admin" -u "root1" -p
+from mongo : 
+db.createUser(
+  {
+    user: "user1",
+    pwd:  "123456",
+    roles: [ { role: "readWrite", db: "p9note" } ]
+  }
+)
+use p9note
+db.createCollection("note") // Create a collection : PatientNote
+db.createCollection("database_sequences") // Create a collection : database_sequences
+
+use p9note_test
+db.createUser(
+  {
+    user: "usertest",
+    pwd:  "123456",
+    roles: [ { role: "readWrite", db: "p9note_test" } ]
+  }
+)
 
 Commandes mongo
 1. "show databases" ti show the list of databases
@@ -25,19 +61,16 @@ This application is a medical web services application, il allows CRUD Notes for
 4. Get a Note
 5. Get all Notes
 
-
 ## Technical:
 1. Framework: Spring Boot v2.2.5
 2. Java 8
 3. Mongo DB 4.2.X
 4. Maven 3.6
 
-
 ## Setup 
 1. Setup a database MongoDB with "p9note" and "p9note_test" databases for developements and tests
 3. Install Java: https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
 4. Spring : https://spring.io
-
 
 ## Docker
 The Docker file has been set, this application is enabled for Docker
@@ -47,7 +80,6 @@ Docker commands are (type from root folder P9_note):
 2. Run the image : "docker run -p 8049:8049 notes"
 3. Stop the image  : "docker stop notes ."
 4. Remove the image :  "docker rmi -f notes"
-
 
 ## Unit Test
 1. Unit tests are written for Utils, Domain, Repository and Controller
@@ -63,8 +95,9 @@ Docker commands are (type from root folder P9_note):
 
 
 ## Run & tests
-1. Run P9NoteApplication
-2. Open in a browser http://localhost:8049 for test environment
+1. Run the database : mongod --auth --port 27017
+2. Run P9NoteApplication
+3. Open in a browser http://localhost:8049 for test environment
 
 
 ### Other consideration

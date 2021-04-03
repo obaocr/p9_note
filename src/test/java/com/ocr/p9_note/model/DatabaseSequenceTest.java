@@ -12,7 +12,7 @@ public class DatabaseSequenceTest {
         databaseSequence.setId("1");
         databaseSequence.setSeq(1);
         assertTrue(databaseSequence != null);
-        assertTrue(databaseSequence.getId() == "1");
+        assertTrue(databaseSequence.getId().equals("1"));
         assertTrue(databaseSequence.getSeq() == 1);
     }
 }
