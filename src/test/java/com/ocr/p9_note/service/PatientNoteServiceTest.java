@@ -25,8 +25,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-// TODO suite des tests  à compléter
-
 @ExtendWith(SpringExtension.class)
 public class PatientNoteServiceTest {
 
